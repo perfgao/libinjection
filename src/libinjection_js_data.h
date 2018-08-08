@@ -1,9 +1,11 @@
 #ifndef __LIBINJECTION_JS_DATA_H__
 #define __LIBINJECTION_JS_DATA_H__
 
+#include <stddef.h>
+
 typedef struct {
-    char* word;
-    char  type;
+    const char* word;
+    const char  type;
 } keywords_t;
 
 static const keywords_t js_keywords[] = {
@@ -30,5 +32,7 @@ static const keywords_t js_keywords[] = {
     {"submit",  'f'},
     {"unload",  'f'},
 };
+
+static const size_t js_keywords_len = 22;
 
 #endif

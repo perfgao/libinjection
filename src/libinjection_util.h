@@ -9,6 +9,6 @@
 #define CHAR_NULL '\0'
 
 char bsearch_keywords(const char *src, size_t len,
-        keywords_t *words, size_t numb);
+        const keywords_t *words, size_t numb);
 
 #endif

@@ -42,7 +42,7 @@ static char* str_lower(const char *src, size_t len) {
 }
 
 char bsearch_keywords(const char *src, size_t len,
-        keywords_t *words, size_t numb)
+        const keywords_t *words, size_t numb)
 {
 
     char *psrc = str_lower(src, len);

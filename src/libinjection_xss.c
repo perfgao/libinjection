@@ -2,6 +2,7 @@
 #include "libinjection.h"
 #include "libinjection_xss.h"
 #include "libinjection_html5.h"
+#include "libinjection_util.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -344,7 +345,11 @@ static attribute_t is_black_attr(const char* s, size_t len)
         /* JavaScript on.* */
         if ((s[0] == 'o' || s[0] == 'O') && (s[1] == 'n' || s[1] == 'N')) {
             /* printf("Got JavaScript on- attribute name\n"); */
-            return TYPE_BLACK;
+            if (bsearch_keywords(s + 2, len - 2, js_keywords,
+                        js_keywords_len)) {
+                return TYPE_BLACK;
+            }
+            return TYPE_NONE;
         }
 
 
