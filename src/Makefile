@@ -19,15 +19,18 @@ STATICLIB=lib${LIBNAME}.${STATICLIB_SUFFIX}
 SHAREDLIB_SUFFIX=so
 SHAREDLIB=lib${LIBNAME}.${SHAREDLIB_SUFFIX}
 
-HEADERS=libinjection.h libinjection_sqli.h libinjection_sqli_data.h libinjection_html5.h libinjection_xss.h
+HEADERS=libinjection.h libinjection_sqli.h libinjection_sqli_data.h libinjection_html5.h libinjection_xss.h \
+		libinjection_js_data.h libinjection_util.h
 
 SOURCES=libinjection_sqli.c \
 	libinjection_html5.c \
-	libinjection_xss.c
+	libinjection_xss.c \
+	libinjection_util.c
 
 OBJECTS=libinjection_sqli.o \
 	libinjection_html5.o \
-	libinjection_xss.o
+	libinjection_xss.o \
+	libinjection_util.o
 
 SAMPLES=html5 sqli fptool
 TESTDRIVERS=reader testdriver testspeedxss testspeedsqli
