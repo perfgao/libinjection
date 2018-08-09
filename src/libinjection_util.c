@@ -12,21 +12,23 @@ static int nstrcasecmp(const char *word, const char *src, size_t len)
         }
     }
 
-    return *word ? 0 : 1;
+    return (*word == 0)? 0 : -1;
 }
 
 static char* str_lower(const char *src, size_t len) {
+    char ch;
+    char *p;
+    char *new;
+
     if (src == NULL) {
         return NULL;
     }
 
-    char *new = malloc(len + 1);
+    new = (char *)malloc(len + 1);
     if (!new) {
         return NULL;
     }
 
-    char ch;
-    char *p;
     for (p = new; len > 0; len--, src++, p++) {
         ch = *src;
         if (ch >= 'A' && ch <= 'Z') {
@@ -38,22 +40,20 @@ static char* str_lower(const char *src, size_t len) {
 
     *p = '\0';
 
-    return p;
+    return new;
 }
 
 char bsearch_keywords(const char *src, size_t len,
         const keywords_t *words, size_t numb)
 {
-
-    char *psrc = str_lower(src, len);
-    if (!psrc) {
-        return CHAR_NULL;
-    }
-
     int    res;
     size_t pos;
     size_t left = 0;
     size_t right = numb - 1;
+    char *psrc = str_lower(src, len);
+    if (!psrc) {
+        return CHAR_NULL;
+    }
 
     while (left <= right) {
         pos = (left + right) >> 1;
