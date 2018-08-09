@@ -6,7 +6,7 @@
 #LUA=/usr/bin/lua5.1
 
 # ubuntu luajit 2
-LUA_FLAGS=-I/usr/include/luajit-2.0 -lluajit-5.1
+LUA_FLAGS=-I/usr/include/luajit-2.0 /usr/local/lib/libluajit-5.1.a
 LUA=luajit
 
 # centos and friends
@@ -14,7 +14,7 @@ LUA=luajit
 #LUA=lua
 
 SHARED=-shared -Wl,-soname,libinjection.so
-CFLAGS= -O0 -g -Wall -Wextra -Wformat=2 -fPIC -fno-common
+CFLAGS= -O2 -g -Wall -Wextra -Wformat=2 -fPIC -fno-common
 APPLE=$(shell uname -a | grep -c Darwin)
 
 # MAC OS X - brew install luajit
@@ -29,7 +29,8 @@ endif
 # MAC OS X: note using ".so" suffix NOT ".dylib"
 libinjection.so: copy libinjection_wrap.c
 	${CC} ${CFLAGS} -I. ${LUA_FLAGS} \
-	${SHARED} libinjection_wrap.c libinjection_sqli.c libinjection_html5.c libinjection_xss.c -o libinjection.so
+	${SHARED} libinjection_wrap.c libinjection_sqli.c libinjection_html5.c \
+	libinjection_xss.c libinjection_util.c -o libinjection.so
 
 # build and run unit tests
 # Uses a python helper to read the test files to generate
@@ -43,8 +44,8 @@ test-unit: libinjection.so lua-TestMore
 test: test-unit
 
 libinjection_wrap.c: libinjection.i libinjection.h
-	swig -version
-	swig -lua -Wall -Wextra libinjection.i
+	/usr/local/bin/swig -version
+	/usr/local/bin/swig -lua -Wall -Wextra libinjection.i
 
 sqlifingerprints.lua: generate_lua_fingerprints.py ../src/sqlparse_data.json
 	./generate_lua_fingerprints.py > sqlifingerprints.lua
