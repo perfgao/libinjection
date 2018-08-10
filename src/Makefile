@@ -56,6 +56,9 @@ sqlparse_data.json: sqlparse_map.py fingerprints
 libinjection_sqli_data.h: sqlparse2c.py sqlparse_data.json
 	./sqlparse2c.py < sqlparse_data.json > libinjection_sqli_data.h
 
+libinjection_js_data.h: htmlparse2c.py htmlparse_data.json
+	./htmlparse2c.py < htmlparse_data.json > libinjection_js_data.h
+
 libinjection_sqli.o: libinjection.h libinjection_sqli.c libinjection_sqli.h libinjection_sqli_data.h
 	${CC} ${CFLAGS} -c -o libinjection_sqli.o libinjection_sqli.c
 
@@ -64,6 +67,9 @@ libinjection_xss.o: libinjection.h libinjection_xss.c libinjection_xss.h libinje
 
 libinjection_html5.o: libinjection.h libinjection_html5.c libinjection_html5.h
 	${CC} ${CFLAGS} -c -o libinjection_html5.o libinjection_html5.c
+
+libinjection_util.o: libinjection_js_data.h libinjection_util.h
+	${CC} ${CFLAGS} -c -o libinjection_util.o libinjection_util.c
 
 ${SHAREDLIB}: ${OBJECTS}
 	$(CC) $+ -shared -lc -o $@
