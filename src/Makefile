@@ -62,7 +62,7 @@ libinjection_js_data.h: htmlparse2c.py htmlparse_data.json
 libinjection_sqli.o: libinjection.h libinjection_sqli.c libinjection_sqli.h libinjection_sqli_data.h
 	${CC} ${CFLAGS} -c -o libinjection_sqli.o libinjection_sqli.c
 
-libinjection_xss.o: libinjection.h libinjection_xss.c libinjection_xss.h libinjection_html5.h
+libinjection_xss.o: libinjection.h libinjection_xss.c libinjection_xss.h libinjection_html5.h libinjection_js_data.h
 	${CC} ${CFLAGS} -c -o libinjection_xss.o libinjection_xss.c
 
 libinjection_html5.o: libinjection.h libinjection_html5.c libinjection_html5.h
