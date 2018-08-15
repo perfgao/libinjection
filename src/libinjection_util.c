@@ -12,7 +12,7 @@ static int nstrcasecmp(const char *word, const char *src, size_t len)
         }
     }
 
-    return (*word == 0)? 0 : -1;
+    return (*word == 0)? 0 : 1;
 }
 
 static char* str_lower(const char *src, size_t len) {
