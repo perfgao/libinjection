@@ -1,75 +1,48 @@
 #include "libinjection_util.h"
 
-static int nstrcasecmp(const char *word, const char *src, size_t len)
+static int nstrcasecmp(const char *a, const char *b, size_t n)
 {
-    for (; len > 0; len--, word++, src++) {
-        if (*word != *src) {
-            return *word - *src;
+    char cb;
+
+    for (; n > 0; a++, b++, n--) {
+        cb = *b;
+
+        if (cb >= 'A' && cb <= 'Z') {
+            cb += 0x20;
         }
 
-        if (*word == '\0') {
+        if (*a != cb) {
+            return *a - cb;
+        } else if (*a == '\0') {
             return -1;
         }
     }
 
-    return (*word == 0)? 0 : 1;
+    return (*a == 0) ? 0 : 1;
 }
 
-static char* str_lower(const char *src, size_t len) {
-    char ch;
-    char *p;
-    char *new;
-
-    if (src == NULL) {
-        return NULL;
-    }
-
-    new = (char *)malloc(len + 1);
-    if (!new) {
-        return NULL;
-    }
-
-    for (p = new; len > 0; len--, src++, p++) {
-        ch = *src;
-        if (ch >= 'A' && ch <= 'Z') {
-            ch -= 0x20;
-        }
-
-        *p = ch;
-    }
-
-    *p = '\0';
-
-    return new;
-}
 
 char bsearch_keywords(const char *src, size_t len,
         const keywords_t *words, size_t numb)
 {
-    int    res;
     size_t pos;
     size_t left = 0;
     size_t right = numb - 1;
-    char *psrc = str_lower(src, len);
-    if (!psrc) {
-        return CHAR_NULL;
-    }
 
-    while (left <= right) {
+    while (left < right) {
         pos = (left + right) >> 1;
 
-        res = nstrcasecmp(words[pos].word, psrc, len);
-        if (res < 0){
+        /* arg0 = lower case only, arg1 = mixed case */
+        if (nstrcasecmp(words[pos].word, src, len) < 0) {
             left = pos + 1;
-        } else if (res > 0){
-            right = pos - 1;
         } else {
-            free(psrc);
-            return words[pos].type;
+            right = pos;
         }
     }
 
-    free(psrc);
-
-    return CHAR_NULL;
+    if ((left == right) && nstrcasecmp(words[left].word, src, len) == 0) {
+        return words[left].type;
+    } else {
+        return CHAR_NULL;
+    }
 }
