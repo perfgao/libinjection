@@ -96,6 +96,6 @@ static const keywords_t js_keywords[] = {
     {"wheel", 'f'},
 };
 
-static const size_t js_keywords_len = 86;
+static const size_t js_keywords_len = 84;
 
 #endif

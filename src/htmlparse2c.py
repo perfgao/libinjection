@@ -30,7 +30,7 @@ typedef struct {
         print ("    {\"%s\", '%s'}," % (k, flag))
 
     print ("};\n")
-    print ("static const size_t js_keywords_len = %d;\n" % (len(eventwords)))
+    print ("static const size_t js_keywords_len = %d;\n" % (len(lowerEvents)))
 
     print ("#endif")
 
